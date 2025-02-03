@@ -51,7 +51,7 @@
     <assertj-core.version>3.27.3</assertj-core.version>
     <lombok.version>1.18.36</lombok.version>
     <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
-    <jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
+    <gitflow-maven-plugin.version>1.21.0</gitflow-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -223,13 +223,24 @@
         </executions>
       </plugin>
 
+
       <plugin>
-        <groupId>external.atlassian.jgitflow</groupId>
-        <artifactId>jgitflow-maven-plugin</artifactId>
-        <version>${jgitflow-maven-plugin.version}</version>
+        <groupId>com.amashchenko.maven.plugin</groupId>
+        <artifactId>gitflow-maven-plugin</artifactId>
+        <version>${gitflow-maven-plugin.version}</version>
         <configuration>
-          <!-- For specific plugin configuration options,
-          see the Goals documentation page -->
+          <installProject>false</installProject>
+          <verbose>false</verbose>
+          <gitFlowConfig>
+            <productionBranch>master</productionBranch>
+            <developmentBranch>develop</developmentBranch>
+            <featureBranchPrefix>feature/</featureBranchPrefix>
+            <releaseBranchPrefix>release/</releaseBranchPrefix>
+            <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
+            <supportBranchPrefix>support/</supportBranchPrefix>
+            <versionTagPrefix />
+            <origin>origin</origin>
+          </gitFlowConfig>
         </configuration>
       </plugin>
 
