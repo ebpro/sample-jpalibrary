@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -51,6 +51,7 @@
     <assertj-core.version>3.27.3</assertj-core.version>
     <lombok.version>1.18.36</lombok.version>
     <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
+    <jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
   </properties>
 
   <dependencyManagement>
@@ -117,21 +118,21 @@
       <version>${logback-classic.version}</version>
     </dependency>
 
-      <dependency>
-        <groupId>jakarta.persistence</groupId>
-        <artifactId>jakarta.persistence-api</artifactId>
-        <version>${jakarta.persistence-api.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.hibernate.orm</groupId>
-        <artifactId>hibernate-core</artifactId>
-        <version>${hibernate-core.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>${h2.version}</version>
-      </dependency>
+    <dependency>
+      <groupId>jakarta.persistence</groupId>
+      <artifactId>jakarta.persistence-api</artifactId>
+      <version>${jakarta.persistence-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.github.javafaker</groupId>
       <artifactId>javafaker</artifactId>
@@ -164,19 +165,19 @@
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
-                          <configuration>
-                    <parameters>true</parameters>
-                    <compilerArgs>
-                        <arg>-Xlint:all</arg>
-                    </compilerArgs>
-                    <annotationProcessorPaths>
-	<path>
-		<groupId>org.projectlombok</groupId>
-		<artifactId>lombok</artifactId>
-		<version>${lombok.version}</version>
-	</path>
-</annotationProcessorPaths>
-                </configuration>
+          <configuration>
+            <parameters>true</parameters>
+            <compilerArgs>
+              <arg>-Xlint:all</arg>
+            </compilerArgs>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+              </path>
+            </annotationProcessorPaths>
+          </configuration>
 
         </plugin>
         <plugin>
@@ -221,6 +222,17 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>external.atlassian.jgitflow</groupId>
+        <artifactId>jgitflow-maven-plugin</artifactId>
+        <version>${jgitflow-maven-plugin.version}</version>
+        <configuration>
+          <!-- For specific plugin configuration options,
+          see the Goals documentation page -->
+        </configuration>
+      </plugin>
+
     </plugins>
 
   </build>
@@ -252,11 +264,11 @@
               <transformers>
                 <!-- merge services resource for SPI -->
                 <transformer
-                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                  implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
 
                 <!-- makes a default entry point in the shaded jar -->
                 <transformer
-                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                   <manifestEntries>
                     <Main-Class>${app.main.class}</Main-Class>
                     <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
@@ -266,7 +278,7 @@
 
                 <!-- keep a default config file -->
                 <transformer
-                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                  implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                   <resource>config.properties</resource>
                   <resource>log4j.properties</resource>
                 </transformer>
