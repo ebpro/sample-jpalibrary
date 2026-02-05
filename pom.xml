@@ -48,7 +48,7 @@
     <javafaker.version>1.0.2</javafaker.version>
     <testcontainers-bom.version>1.20.4</testcontainers-bom.version>
     <mockito-junit-jupiter.version>5.15.2</mockito-junit-jupiter.version>
-    <assertj-core.version>3.27.3</assertj-core.version>
+    <assertj-core.version>3.27.7</assertj-core.version>
     <lombok.version>1.18.36</lombok.version>
     <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
   </properties>
