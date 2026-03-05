@@ -11,17 +11,21 @@ import org.h2.tools.Server;
 import java.sql.SQLException;
 
 /**
- * Main application class that manages the JPA EntityManagerFactory and H2 database server.
+ * Main application class that manages the JPA EntityManagerFactory and H2
+ * database server.
  * This class is responsible for:
  * - Starting the H2 database server
  * - Creating and managing the EntityManagerFactory
  * - Providing access to the EntityManagerFactory through a static method
  * - Handling proper shutdown of resources through a shutdown hook
  * - Generating sample data and performing basic JPA queries
- * The class uses static initialization to set up the database server and EntityManagerFactory,
+ * The class uses static initialization to set up the database server and
+ * EntityManagerFactory,
  * ensuring they are available throughout the application's lifecycle.
- * The H2 database server is started with TCP connections allowed from other hosts,
- * and the EntityManagerFactory is created using the "tpJakartaUnit" persistence unit.
+ * The H2 database server is started with TCP connections allowed from other
+ * hosts,
+ * and the EntityManagerFactory is created using the "tpJakartaUnit" persistence
+ * unit.
  */
 @Slf4j
 public class App {
@@ -81,31 +85,30 @@ public class App {
   public static void main(String[] args) {
 
     // Generate sample data
-    try (DataGenerator dataGenerator =
-           DataGenerator.builder()
-             .entityManagerFactory(getEntityManagerFactory())
-             .bookCount(2000)
-             .authorCount(180)
-             .userCount(1000)
-             .loanCount(2000)
-             .build()) {
+    try (DataGenerator dataGenerator = DataGenerator.builder()
+        .entityManagerFactory(getEntityManagerFactory())
+        .bookCount(200)
+        .authorCount(18)
+        .userCount(100)
+        .loanCount(200)
+        .build()) {
       dataGenerator.generateData();
     }
 
     // Perform basic JPA queries
     try (EntityManager entityManager = getEntityManagerFactory().createEntityManager()) {
       entityManager.createQuery("select a from Author a", Author.class)
-        .setFirstResult(0)
-        .setMaxResults(10)
-        .getResultStream()
-        .map(Object::toString)
-        .forEach(log::info);
+          .setFirstResult(0)
+          .setMaxResults(10)
+          .getResultStream()
+          .map(Object::toString)
+          .forEach(log::info);
     }
   }
 
   private static final class DatabaseConfig {
-    private static final String[] DB_ARGS_TCP = {"-tcpAllowOthers", "-ifNotExists"};
-    private static final String[] DB_ARGS_WEB = {"-webAllowOthers"};
+    private static final String[] DB_ARGS_TCP = { "-tcpAllowOthers", "-ifNotExists" };
+    private static final String[] DB_ARGS_WEB = { "-webAllowOthers" };
 
     private static final String PERSISTENCE_UNIT = "tpJakartaUnit";
   }

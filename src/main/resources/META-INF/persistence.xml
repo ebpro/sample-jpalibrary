@@ -5,7 +5,11 @@
 
   <!-- The application persistence units -->
   <persistence-unit name="tpJakartaUnit">
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>fr.univtln.bruno.samples.jpa.model.documents.Book</class>
+    <class>fr.univtln.bruno.samples.jpa.model.documents.Author</class>
+    <class>fr.univtln.bruno.samples.jpa.model.documents.Document</class>
+    <class>fr.univtln.bruno.samples.jpa.model.users.User</class>
+    <class>fr.univtln.bruno.samples.jpa.model.Loan</class>
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver" />
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/testdb" />
@@ -31,7 +35,11 @@
   <!-- The test persistence unit
   It uses an in-memory database -->
   <persistence-unit name="testjpaUnit">
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <class>fr.univtln.bruno.samples.jpa.model.documents.Book</class>
+    <class>fr.univtln.bruno.samples.jpa.model.documents.Author</class>
+    <class>fr.univtln.bruno.samples.jpa.model.documents.Document</class>
+    <class>fr.univtln.bruno.samples.jpa.model.users.User</class>
+    <class>fr.univtln.bruno.samples.jpa.model.Loan</class>
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver" />
       <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1" />
