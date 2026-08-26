@@ -1,14 +1,16 @@
 package fr.univtln.bruno.samples.jpa.model.documents;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+
 /**
  * Represents a Book entity that extends the Document class.
  * This class maintains information about books including their ISBN and page count.
@@ -29,6 +31,9 @@ import jakarta.validation.constraints.Positive;
 @Setter
 @Getter
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
+
+@NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn")
+@NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b")
 public class Book extends Document {
 
   /**

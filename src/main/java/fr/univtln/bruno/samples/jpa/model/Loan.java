@@ -41,7 +41,7 @@ public class Loan {
    * This field represents a many-to-one relationship between Loan and User entities,
    * where multiple loans can be associated with a single user.
    */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private User user;
 
   /**
@@ -49,7 +49,7 @@ public class Loan {
    * This represents a many-to-one relationship between Loan and Document entities,
    * where multiple loans can be associated with a single document.
    */
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private Document document;
 
   @Column(name = "due_date", nullable = false)

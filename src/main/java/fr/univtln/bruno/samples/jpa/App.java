@@ -1,6 +1,8 @@
 package fr.univtln.bruno.samples.jpa;
 
 import fr.univtln.bruno.samples.jpa.model.documents.Author;
+import fr.univtln.bruno.samples.jpa.model.documents.Book;
+import fr.univtln.bruno.samples.jpa.model.utils.BookService;
 import fr.univtln.bruno.samples.jpa.model.utils.DataGenerator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -103,6 +105,26 @@ public class App {
           .getResultStream()
           .map(Object::toString)
           .forEach(log::info);
+
+
+      entityManager.createNamedQuery("Book.findAll", Book.class)
+        .setFirstResult(0)
+        .setMaxResults(10)
+        .getResultStream()
+        .map(Book::getTitle)
+        .forEach(log::info);
+
+      Repository<Book> bookRepository = new BookRepository(entityManager);
+      bookRepository.save(Book.builder()
+        .title("The Great Gatsby")
+        .isbn("978-3-16-148410-0")
+        .pages(180)
+        .build());
+
+      BookService bookService = new BookService();
+
+      bookService.checkRepair("978-3-16-148410-0");
+
     }
   }
 

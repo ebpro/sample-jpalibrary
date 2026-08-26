@@ -116,7 +116,9 @@ public class DataGenerator implements AutoCloseable {
       Book.class);
     query.setParameter("date", date);
     query.setMaxResults(1);
-    return Optional.of(query.getSingleResult());
+    // Use getResultList to avoid NoResultException and return Optional.empty when no result
+    List<Book> results = query.getResultList();
+    return results.stream().findFirst();
   }
 
   /**
@@ -191,7 +193,12 @@ public class DataGenerator implements AutoCloseable {
 
       // Generate loans
       IntStream.range(0, loanCount)
-        .forEach(i -> entityManager.persist(createLoan(getRandomUser())));
+        .forEach(i -> {
+          Loan loan = createLoan(getRandomUser());
+          if (loan != null) {
+            entityManager.persist(loan);
+          }
+        });
       entityManager.getTransaction().commit();
     } catch (Exception e) {
       entityManager.getTransaction().rollback();
@@ -207,7 +214,11 @@ public class DataGenerator implements AutoCloseable {
   private User getRandomUser() {
     TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u ORDER BY FUNCTION('RAND')", User.class);
     query.setMaxResults(1);
-    return query.getSingleResult();
+    List<User> results = query.getResultList();
+    if (results.isEmpty()) {
+      throw new IllegalStateException("No users available in the database to choose from");
+    }
+    return results.get(0);
   }
 
   /**
